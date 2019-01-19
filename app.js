@@ -9,6 +9,11 @@ const {
 const {
   isRealString
 } = require('./public/routesJs/validation');
+const {
+  Users
+} = require('./public/routesJs/users');
+
+var users = new Users();
 
 const port = process.env.PORT || 8000;
 var server = require('http').createServer(app);
@@ -26,11 +31,10 @@ io.on('connection', (socket) => {
     }
 
     socket.join(params.room);
-    // socket.leave('The Office Fans');
+    users.removeUser(socket.id);
+    users.addUser(socket.id, params.name, params.room);
 
-    // io.emit -> io.to('The Office Fans').emit
-    // socket.broadcast.emit -> socket.broadcast.to('The Office Fans').emit
-    // socket.emit
+    io.to(params.room).emit('updateUserList', users.getUserList(params.room));
 
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
 
@@ -41,17 +45,29 @@ io.on('connection', (socket) => {
 
 
   socket.on('createMessage', (message, callback) => {
-    console.log('createMessage', message);
-    io.emit('newMessage', generateMessage(message.from, message.text));
+    var user = users.getUser(socket.id);
+
+    if (user && isRealString(message.text)) {
+      io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
+    }
     callback('This is from server');
   });
 
   socket.on('createLocationMessage', (coords) => {
-    io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
+    var user = users.getUser(socket.id);
+
+    if (user) {
+      io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));
+    }
   });
 
   socket.on('disconnect', () => {
-    console.log('User was disconnected');
+    var user = users.removeUser(socket.id);
+
+    if (user) {
+      io.to(user.room).emit('updateUserList', users.getUserList(user.room));
+      io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left.`));
+    }
   });
 
 });
