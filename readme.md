@@ -1,6 +1,14 @@
-socket.emit emits to single connection while io.emit emits an event to every single connection
-socket.broadcast.emit emit message from the source not to the source.
-arrow function might not work in mobile,old browsers.
-e.preventDefault() prevent default action like showing of messages on tab.
-messageTextbox.val() set the value to be again empty as after sending the textbar becomes clear.
-autocomplete gives suggestion autofocus focus on the input.
+# Socket-Io CHAT APP
+
+- A chat application made using socket.io. Allows users to create different chat rooms to chat with their friends.
+
+# DEMO
+
+- Enter username and room name .
+  ![Screenshot (94)](https://user-images.githubusercontent.com/42304018/59152628-b4227d80-8a65-11e9-9121-334c2cb80219.png)
+
+- Chat Window
+  ![Screenshot (95)](https://user-images.githubusercontent.com/42304018/59152633-cc929800-8a65-11e9-8803-658f1a8b99bd.png)
+
+- Send Current Location
+  ![Screenshot (96)](https://user-images.githubusercontent.com/42304018/59152638-e633df80-8a65-11e9-84d2-187bf7f519f9.png)

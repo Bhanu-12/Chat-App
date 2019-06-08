@@ -16,17 +16,23 @@
       </div>
       <div class="form-field">
         <label>Display name</label>
-        <input type="text" name="name" autofocus />
+        <input type="text" name="name"  autofocus autocomplete="off" onkeyup="myFunction()" />
       </div>
       <div class="form-field">
         <label>Room name</label>
-        <input type="text" name="room" />
-      </div>
+        <input type="text" name="room" id="fname" autofocus autocomplete="off" onkeyup="myFunction()" />
+      </div> 
       <div class="form-field">
         <button>Join</button>
       </div>
     </form>
   </div>
+  <script>
+    function myFunction() {
+      var x = document.getElementById("fname");
+      x.value = x.value.toLowerCase();
+    }
+  </script>
 </body>
 
 </html>

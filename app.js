@@ -9,6 +9,7 @@ const {
 const {
   isRealString
 } = require('./public/routesJs/validation');
+
 const {
   Users
 } = require('./public/routesJs/users');
@@ -27,7 +28,7 @@ io.on('connection', (socket) => {
 
   socket.on('join', (params, callback) => {
     if (!isRealString(params.name) || !isRealString(params.room)) {
-      callback('Name and room name are required.');
+      return callback('Name and room name are required.');
     }
 
     socket.join(params.room);
@@ -38,7 +39,7 @@ io.on('connection', (socket) => {
 
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
 
-    socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} has joined.`));
+    socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin:', `${params.name} has joined.`));
 
     callback();
   });
