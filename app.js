@@ -1,6 +1,10 @@
 const express = require('express');
+const port = process.env.PORT || 8000;
 var app = express();
+var server = require('http').createServer(app);
+const socketIO = require('socket.io');
 
+var users = new Users();
 const {
   generateMessage,
   generateLocationMessage
@@ -14,11 +18,7 @@ const {
   Users
 } = require('./public/routesJs/users');
 
-var users = new Users();
 
-const port = process.env.PORT || 8000;
-var server = require('http').createServer(app);
-const socketIO = require('socket.io');
 app.use(express.static(__dirname + "/public"));
 
 const io = socketIO(server);
