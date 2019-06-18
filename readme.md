@@ -1,6 +1,6 @@
 # Socket-Io CHAT APP
 
-- A chat application made using socket.io. Allows users to create different chat rooms to chat with their friends.
+- A chat application made using socket.io. Allows users to create different chat rooms to chat with their friends. ![Try it here](https://room-chat-app.herokuapp.com/);
 
 # DEMO
 
